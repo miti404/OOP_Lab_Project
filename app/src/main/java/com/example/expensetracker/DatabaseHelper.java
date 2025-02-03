@@ -66,7 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT SUM(" + COL_AMOUNT + ") FROM " + TABLE_EXPENSES, null);
         cursor.moveToFirst();
         double total = cursor.getDouble(0);
-        cursor.close();
+        cursor.close(); //storage ta free korram
         return total;
     }
 

@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         android:text="Edit"
         android:layout_gravity="center_vertical"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/purple"
         android:textColor="@android:color/white"
         android:layout_marginRight="1dp"/>
 
@@ -110,7 +110,7 @@
         android:layout_height="wrap_content"
         android:text="Delete"
         android:layout_gravity="center_vertical"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/purple"
         android:textColor="@android:color/white"
         android:layout_marginLeft="1dp"/>
 

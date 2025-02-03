@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Calendar;
@@ -21,14 +22,15 @@ public class AddExpenseActivity extends AppCompatActivity {
 
     @Override
 protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.add_expense);
+        EdgeToEdge.enable(this);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.add_expense);
 
-    dbHelper = new DatabaseHelper(this);
-    descriptionInput = findViewById(R.id.descriptionInput);
-    amountInput = findViewById(R.id.amountInput);
-    categoryInput = findViewById(R.id.categoryInput);
-    dateInput = findViewById(R.id.dateInput);
+        dbHelper = new DatabaseHelper(this);
+        descriptionInput = findViewById(R.id.descriptionInput);
+        amountInput = findViewById(R.id.amountInput);
+        categoryInput = findViewById(R.id.categoryInput);
+        dateInput = findViewById(R.id.dateInput);
 
     dateInput.setOnClickListener(v -> {
         Calendar calendar = Calendar.getInstance();
@@ -39,6 +41,7 @@ protected void onCreate(Bundle savedInstanceState) {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 AddExpenseActivity.this,
+                //callback function to set user input date
                 (DatePicker view, int selectedYear, int selectedMonth, int selectedDay) -> {
                     String Day = "";
                     if(selectedDay>0 && selectedDay<=9){
@@ -104,7 +107,8 @@ public void saveExpense() {
         } else {
             Toast.makeText(this, "Error saving expense", Toast.LENGTH_SHORT).show();
         }
-    } else {
+    }
+    else {
         if (dbHelper.updateExpense(expenseId, description, amount, category, date)) {
             Toast.makeText(this, "Expense updated", Toast.LENGTH_SHORT).show();
             finish();

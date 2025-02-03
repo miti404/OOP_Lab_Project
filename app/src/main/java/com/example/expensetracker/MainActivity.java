@@ -60,21 +60,24 @@ public class MainActivity extends AppCompatActivity {
                 R.id.expenseDate
         };
 
-        // Reuse the adapter if it exists, otherwise create a new one
+
         if (expensesList.getAdapter() == null) {
             SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.item_layout, cursor, columns, to, 0) {
                 @Override
                 public View getView(int position, View convertView, ViewGroup parent) {
                     View view = super.getView(position, convertView, parent);
+
                     Button deleteButton = view.findViewById(R.id.deleteButton);
                     Button editButton = view.findViewById(R.id.editButton);
+
                     deleteButton.setOnClickListener(v -> {
                         Cursor c = (Cursor) getItem(position);
                         int expenseId = c.getInt(c.getColumnIndexOrThrow(DatabaseHelper.COL_ID));
                         if (dbHelper.deleteExpense(expenseId)) {
                             Toast.makeText(MainActivity.this, "Expense deleted", Toast.LENGTH_SHORT).show();
                             fetchExpenseList();
-                        } else {
+                        }
+                        else {
                             Toast.makeText(MainActivity.this, "Error deleting expense", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                         Cursor c = (Cursor) getItem(position);
                         int expenseId = c.getInt(c.getColumnIndexOrThrow(DatabaseHelper.COL_ID));
                         Intent intent = new Intent(MainActivity.this, AddExpenseActivity.class);
-                        intent.putExtra("EXPENSE_ID", expenseId);
+                        intent.putExtra("EXPENSE_ID", expenseId); //passing id from main activity to AddExpense activity
                         startActivity(intent);
                     });
 
@@ -92,17 +95,18 @@ public class MainActivity extends AppCompatActivity {
             };
             expensesList.setAdapter(adapter);
         } else {
-            // Update the existing adapter's cursor
+            // Update the existing adapter's cursor (for db change)
             ((SimpleCursorAdapter) expensesList.getAdapter()).swapCursor(cursor);
         }
     }
 
     @Override
     protected void onResume() {
-        super.onResume();
+        super.onResume(); //restart the prev activity
         fetchExpenseList();
     }
 
+    //Add button
     public void gotoAddPage(View view) {
         Intent intent = new Intent(this, AddExpenseActivity.class);
         startActivity(intent);
